@@ -1,0 +1,27 @@
+{
+  "name": "dalek-driver-chrome",
+  "version": "0.0.1",
+  "description": "Browser Driver for Chrome providing simple process control to start WebDriver instance",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec --timeout 15000 test/spec.*.js",
+    "continous-test": "watch \"npm test\" test"
+  },
+  "author": "Sebastian Golasch <public@asciidisco.com> (http://asciidisco.com)",
+  "contributors": [
+    "Rodney Rehm <mail+github@rodneyrehm.de> (http://rodneyrehm.de)"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "chromedriver": "^2.14.1",
+    "expand-home-dir": "0.0.2",
+    "portscanner": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "istanbul": "^0.3.13",
+    "mocha": "^2.2.4",
+    "watch": "^0.16.0",
+    "wd": "^0.3.11"
+  }
+}
