@@ -118,6 +118,8 @@ describe('#_findPort: No sufficiant port', function nonSufficientPort() {
 describe('#_watchStartupErr:', function watchStartupErr() {
   var browser = new Browser();
   browser.start();
+  browser.kill = noop;
+
   it('should return error when error code is given', function watchStartupErrShouldError() {
     var code = 5;
     var ecb = function watchStartupErrShouldErrorCb(error) {
@@ -132,6 +134,8 @@ describe('#_watchStartupErr:', function watchStartupErr() {
 describe('#_handleStartupClose:', function handleStartupClose() {
   var browser = new Browser();
   browser.start();
+  browser.kill = noop;
+
   it('should return error when error code is given', function handleStartupCloseShouldError() {
     var code = 5;
     var ecb = function handleStartupCloseShouldErrorCb(error) {
@@ -191,16 +195,16 @@ describe('#_watchStartupOut scans stdout', function watchStartupOutScansStdout()
   });
 
   it('should return error with error data', function watchStartupOutScansStdoutWithoutData() {
-    var _err = 'Could not start Ghost Driver';
+    var _err = 'Exiting...';
     var cb = function watchStartupOutScansStdoutWithoutDataCb(err) {
       expect(err).to.be.an.instanceof(Error);
-      expect(err.message).to.equal(_err);
+      expect(err.message).to.equal('Could not start ChromeDriver');
     };
     browser._watchStartupOut(noop, cb, _err);
   });
 
   it('should succed with correct data', function watchStartupOutScansStdoutWithData() {
-    var _data = 'GhostDriver - Main - running';
+    var _data = 'Starting ChromeDriver';
     var cb = function watchStartupOutScansStdoutWithData(data) {
       expect(data).to.be.an('object');
       expect(data).to.have.any.keys('wd');
@@ -284,7 +288,7 @@ describe('Binary can timeout', function binaryTimeout() {
   it('should generate an error', function binaryTimeoutError(done) {
     var cb = function binaryTimeoutErrorCb(err) {
       expect(err).to.be.an.instanceof(Error);
-      expect(err.message).to.equal('GhostDriver did not respond within 5s');
+      expect(err.message).to.equal('ChromeDriver did not respond within 5s');
       done();
     };
     browser._startListening(noop, cb, noop);
@@ -295,7 +299,7 @@ describe('Webdriver interface should be enabled', function webdriverInterface() 
   var browser = new Browser();
   it('should be able to do a webdriver request', function webdriverInterfaceRequest(done) {
     browser.start(function webdriverInterfaceRequestStartCb(config) {
-      http.get('http://' + config.wd.host + ':' + config.wd.port + '/status', function webdriverInterfaceRequestCb(res) {
+      http.get('http://' + config.wd.host + ':' + config.wd.port + '/wd/hub/status', function webdriverInterfaceRequestCb(res) {
         res.on('data', function webdriverInterfaceRequestDataCb(data) {
           var _data = JSON.parse(String(data));
           expect(_data).to.be.an('object');
