@@ -12,7 +12,7 @@ var defaults = {
   // the host (actually "network interface") to expose WebDriver on
   host: '127.0.0.1',
   // all ports are negotiated, but the user might want to use a specific range
-  portRange: [9000, 9010],
+  portRange: [2048, 4096],
   binary: chromedriverPath,
   args: [],
 };
