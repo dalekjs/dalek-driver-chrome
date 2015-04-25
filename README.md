@@ -1,20 +1,20 @@
-# dalek-driver-phantomjs - Browser/WebDriver process control
+# dalek-driver-chrome - Browser/WebDriver process control
 
-Browser Driver for [PhantomJS 2](http://phantomjs.org/) providing an API to control the Browser/WebDriver process, buggyfill the browser's WebDriver capabilities, as well as provide an easy means to install the necessary binaries etc.
+Browser Driver for [Chrome](???) providing an API to control the Browser/WebDriver process, buggyfill the browser's WebDriver capabilities, as well as provide an easy means to install the necessary binaries etc.
 
 ## Browser / Driver Documentation
 
-* [PhantomJS Command Line Interface](http://phantomjs.org/api/command-line.html)
+* [Chromedriver Docs](???)
 
 ---
 
 ## API Documentation
 
 ```js
-var Browser = require('dalek-driver-phantomjs');
+var Browser = require('dalek-driver-chrome');
 var browser = new Browser({
   // path to binary
-  // default: provided by phantomjs
+  // default: provided by chrome
   "binary": "/path/to/browser-executable",
   // make the WebDriver instance listen on interface 127.0.0.1
   // default: "127.0.0.1"
@@ -22,10 +22,10 @@ var browser = new Browser({
   // make the WebDriver instance listen on a port between 1111 and 2222
   // default: [2048, 4096]
   "portRange": [1111, 2222],
-  // CLI parameters passed to PhantomJS at startup
-  // default: (--webdriver=<host:port> --ignore-ssl-errors=true)
+  // CLI parameters passed to Chrome at startup
+  // default: (--port=<host:port> --verbose)
   "args": [
-    // see http://phantomjs.org/api/command-line.html
+    // see ???
     "--local-to-remote-url-access=true"
   ],
 });
@@ -60,14 +60,11 @@ a full integration using [WD.js](https://github.com/admc/wd) could look like
 
 ```js
 var WD = require('wd');
-var Browser = require('dalek-driver-phantomjs');
+var Browser = require('dalek-driver-chrome');
 
 var wd = wd.promiseChainRemote();
 var browser = new Browser({
-  name: 'Phantom',
-  args: [
-    '--local-to-remote-url-access=true'
-  ]
+  name: 'Chrome'
 });
 
 browser.start(function(options) {
