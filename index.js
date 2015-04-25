@@ -5,7 +5,7 @@ var spawn = require('child_process').spawn;
 var portscanner = require('portscanner');
 var expandHomeDir = require('expand-home-dir');
 var chromedriverPath = require('chromedriver').path;
-var capability = require('./capability.json');
+var capability = require('./capability.js');
 
 var defaults = {
   // name of the browser instance
