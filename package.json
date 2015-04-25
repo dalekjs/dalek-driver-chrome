@@ -1,6 +1,6 @@
 {
   "name": "dalek-driver-chrome",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Browser Driver for Chrome providing simple process control to start WebDriver instance",
   "main": "index.js",
   "scripts": {
