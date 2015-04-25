@@ -1,10 +1,10 @@
 # dalek-driver-chrome - Browser/WebDriver process control
 
-Browser Driver for [Chrome](???) providing an API to control the Browser/WebDriver process, buggyfill the browser's WebDriver capabilities, as well as provide an easy means to install the necessary binaries etc.
+Browser Driver for [Chrome](https://sites.google.com/a/chromium.org/chromedriver/) providing an API to control the Browser/WebDriver process, buggyfill the browser's WebDriver capabilities, as well as provide an easy means to install the necessary binaries etc.
 
 ## Browser / Driver Documentation
 
-* [Chromedriver Docs](???)
+* [Chromedriver Docs](https://sites.google.com/a/chromium.org/chromedriver/)
 
 ---
 
@@ -23,9 +23,9 @@ var browser = new Browser({
   // default: [2048, 4096]
   "portRange": [1111, 2222],
   // CLI parameters passed to Chrome at startup
-  // default: (--port=<host:port> --verbose)
+  // default: (--port=<host:port> --verbose --url-base=/wd/hub/)
   "args": [
-    // see ???
+    // see http://peter.sh/experiments/chromium-command-line-switches/
     "--local-to-remote-url-access=true"
   ],
 });
