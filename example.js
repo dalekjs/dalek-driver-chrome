@@ -35,17 +35,20 @@ function stop() {
   });
 }
 
+function success(data) {
+  console.log("success", JSON.stringify(data, null, 2));
+  return data;
+}
+
+function error(data) {
+  console.log("error", JSON.stringify(data, null, 2));
+}
+
 function haveSomeFunWithWebDriver() {
   // open a website
   wd.get('https://google.com')
     // find all its links
-    .elements('css', 'a')
-    // output what ever elements() returned
-    .then(function(data) {
-      console.log("success", JSON.stringify(data, null, 2));
-    }, function(data) {
-      console.log("error", JSON.stringify(data, null, 2));
-    })
+    .elements('css', 'a').then(success, error)
     // stop WD and the driver
     .then(stop)
     // woopsi
