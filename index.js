@@ -5,7 +5,7 @@ var spawn = require('child_process').spawn;
 var portscanner = require('portscanner');
 var expandHomeDir = require('expand-home-dir');
 var chromedriverPath = require('chromedriver').path;
-var capability = require('./capability.js');
+var behaviors = require('./behaviors.js');
 
 var defaults = {
   // name of the browser instance
@@ -22,9 +22,9 @@ function noop() {}
 
 function Browser(options) {
   this.options = options || {};
-  Object.keys(defaults).forEach(function(key) {
+  Object.keys(Browser.defaults).forEach(function(key) {
     if (this.options[key] === undefined) {
-      this.options[key] = defaults[key];
+      this.options[key] = Browser.defaults[key];
     }
   }, this);
 
@@ -41,7 +41,8 @@ function Browser(options) {
   }
 }
 
-Browser.prototype.capability = capability;
+Browser.defaults = defaults;
+Browser.prototype.behavior = behavior;
 
 Browser.prototype.start = function(success, error, failure) {
   if (this.process) {
@@ -64,6 +65,7 @@ Browser.prototype.start = function(success, error, failure) {
 
 Browser.prototype.stop = function(callback) {
   if (!this.process) {
+    callback && callback();
     return;
   }
 
@@ -134,41 +136,58 @@ Browser.prototype._watchStartupOut = function(success, error, data) {
   var _data = String(data);
   if (_data.indexOf('Starting ChromeDriver') !== -1) {
     this._stopListening();
-    success({
+    var endpoints = {
       wd: {
         browserName: this.options.browserName,
         host: this.options.host,
         port: this.options.port,
       }
-    });
+    };
+
+    success(endpoints, this.options);
   } else if (_data.indexOf('Exiting...') !== -1) {
     this._stopListening();
     this.kill();
-    error(new Error('Could not start ChromeDriver'));
+    error(
+      new Error('Could not start ChromeDriver'),
+      this.options
+    );
   }
 };
 
 Browser.prototype._watchStartupErr = function(success, error, data) {
   this._stopListening();
   this.kill();
-  error(new Error('Process error: ' + String(data)));
+  error(
+    new Error('Process error: ' + String(data)),
+    this.options
+  );
 };
 
 Browser.prototype._handleStartupClose = function(success, error, code) {
   this._stopListening();
   this.kill();
-  error(new Error('Process closed with code: ' + code));
+  error(
+    new Error('Process closed with code: ' + code),
+    this.options
+  );
 };
 
 Browser.prototype._handleStartupError = function(success, error, err) {
   this._stopListening();
   this.kill();
-  error(new Error('Unable to start "' + this.options.binary + '" (' + err + ')'));
+  error(
+    new Error('Unable to start "' + this.options.binary + '" (' + err + ')'),
+    this.options
+  );
 };
 
 Browser.prototype._handleProcessFailure = function(failure, err) {
   this.kill();
-  failure(new Error('Process quit unexpectedly "' + this.options.binary + '" (' + err + ')'));
+  failure(
+    new Error('Process quit unexpectedly "' + this.options.binary + '" (' + err + ')'),
+    this.options
+  );
 };
 
 module.exports = Browser;
