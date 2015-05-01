@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "chai": "^2.2.0",
+    "dalek-driver": "git://github.com/dalekjs/dalek-driver.git#0.1.0",
     "istanbul": "^0.3.13",
     "mocha": "^2.2.4",
     "watch": "^0.16.0",
