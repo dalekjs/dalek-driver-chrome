@@ -11,8 +11,8 @@ Browser Driver for [Chrome](https://sites.google.com/a/chromium.org/chromedriver
 ## API Documentation
 
 ```js
-var Browser = require('dalek-driver-chrome');
-var browser = new Browser({
+var Driver = require('dalek-driver-chrome');
+var driver = new Driver({
   // path to binary
   // default: provided by chrome
   "binary": "/path/to/browser-executable",
@@ -45,29 +45,29 @@ function failure(err) {
 }
 
 // fire up the browser and WebDriver service
-browser.start(success, error, failure);
+driver.start(success, error, failure);
 
 // gracefully stop the browser
-browser.stop(function() {
+driver.stop(function() {
   console.log('stopped!');
 });
 
 // force kill the process (in case stop() doesn't work)
-browser.kill();
+driver.kill();
 ```
 
 a full integration using [WD.js](https://github.com/admc/wd) could look like
 
 ```js
 var WD = require('wd');
-var Browser = require('dalek-driver-chrome');
+var Driver = require('dalek-driver-chrome');
 
 var wd = wd.promiseChainRemote();
-var browser = new Browser({
+var driver = new Driver({
   name: 'Chrome'
 });
 
-browser.start(function(options) {
+driver.start(function(options) {
   // initialize WD client from configuration options
   // provided by the browser driver
   wd.remote(options.wd).then(function() {
@@ -77,6 +77,6 @@ browser.start(function(options) {
 
 // stop WD client, then service and browser
 wd.quit().then(function() {
-  browser.stop();
+  driver.stop();
 });
 ```

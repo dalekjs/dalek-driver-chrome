@@ -20,11 +20,11 @@ var defaults = {
 
 function noop() {}
 
-function Browser(options) {
+function Driver(options) {
   this.options = options || {};
-  Object.keys(Browser.defaults).forEach(function(key) {
+  Object.keys(Driver.defaults).forEach(function(key) {
     if (this.options[key] === undefined) {
-      this.options[key] = Browser.defaults[key];
+      this.options[key] = Driver.defaults[key];
     }
   }, this);
 
@@ -41,10 +41,10 @@ function Browser(options) {
   }
 }
 
-Browser.defaults = defaults;
-Browser.prototype.behavior = behavior;
+Driver.defaults = defaults;
+Driver.prototype.behavior = behavior;
 
-Browser.prototype.start = function(success, error, failure) {
+Driver.prototype.start = function(success, error, failure) {
   if (this.process) {
     throw new Error('Process already running');
   }
@@ -63,7 +63,7 @@ Browser.prototype.start = function(success, error, failure) {
   }.bind(this), error);
 };
 
-Browser.prototype.stop = function(callback) {
+Driver.prototype.stop = function(callback) {
   if (!this.process) {
     callback && callback();
     return;
@@ -80,7 +80,7 @@ Browser.prototype.stop = function(callback) {
   this.process.kill('SIGTERM');
 };
 
-Browser.prototype.kill = function() {
+Driver.prototype.kill = function() {
   if (!this.process) {
     return;
   }
@@ -89,7 +89,7 @@ Browser.prototype.kill = function() {
   this.process = null;
 };
 
-Browser.prototype._findPort = function(success, error) {
+Driver.prototype._findPort = function(success, error) {
   portscanner.findAPortNotInUse(
     this.options.portRange[0],
     this.options.portRange[1],
@@ -104,7 +104,7 @@ Browser.prototype._findPort = function(success, error) {
   );
 };
 
-Browser.prototype._startListening = function(success, error, failure) {
+Driver.prototype._startListening = function(success, error, failure) {
   this._watchStartupOut = this._watchStartupOut.bind(this, success, error);
   this._watchStartupErr = this._watchStartupErr.bind(this, success, error);
   this._handleStartupClose = this._handleStartupClose.bind(this, success, error);
@@ -121,7 +121,7 @@ Browser.prototype._startListening = function(success, error, failure) {
   }, 5000);
 };
 
-Browser.prototype._stopListening = function() {
+Driver.prototype._stopListening = function() {
   clearTimeout(this._timeout);
   this.process.removeListener('close', this._handleStartupClose);
   this.process.removeListener('error', this._handleStartupError);
@@ -132,7 +132,7 @@ Browser.prototype._stopListening = function() {
   this.process.on('close', this._handleProcessFailure);
 };
 
-Browser.prototype._watchStartupOut = function(success, error, data) {
+Driver.prototype._watchStartupOut = function(success, error, data) {
   var _data = String(data);
   if (_data.indexOf('Starting ChromeDriver') !== -1) {
     this._stopListening();
@@ -155,7 +155,7 @@ Browser.prototype._watchStartupOut = function(success, error, data) {
   }
 };
 
-Browser.prototype._watchStartupErr = function(success, error, data) {
+Driver.prototype._watchStartupErr = function(success, error, data) {
   this._stopListening();
   this.kill();
   error(
@@ -164,7 +164,7 @@ Browser.prototype._watchStartupErr = function(success, error, data) {
   );
 };
 
-Browser.prototype._handleStartupClose = function(success, error, code) {
+Driver.prototype._handleStartupClose = function(success, error, code) {
   this._stopListening();
   this.kill();
   error(
@@ -173,7 +173,7 @@ Browser.prototype._handleStartupClose = function(success, error, code) {
   );
 };
 
-Browser.prototype._handleStartupError = function(success, error, err) {
+Driver.prototype._handleStartupError = function(success, error, err) {
   this._stopListening();
   this.kill();
   error(
@@ -182,7 +182,7 @@ Browser.prototype._handleStartupError = function(success, error, err) {
   );
 };
 
-Browser.prototype._handleProcessFailure = function(failure, err) {
+Driver.prototype._handleProcessFailure = function(failure, err) {
   this.kill();
   failure(
     new Error('Process quit unexpectedly "' + this.options.binary + '" (' + err + ')'),
@@ -190,4 +190,4 @@ Browser.prototype._handleProcessFailure = function(failure, err) {
   );
 };
 
-module.exports = Browser;
+module.exports = Driver;
