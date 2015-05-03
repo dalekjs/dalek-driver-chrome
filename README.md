@@ -1,10 +1,11 @@
 # dalek-driver-chrome - Browser/WebDriver process control
 
-Browser Driver for [Chrome](https://sites.google.com/a/chromium.org/chromedriver/) providing an API to control the Browser/WebDriver process, buggyfill the browser's WebDriver capabilities, as well as provide an easy means to install the necessary binaries etc.
+Browser Driver for [Google Chrome](https://google.com/chrome/) using [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) providing an API to control the Browser/WebDriver process.
 
 ## Browser / Driver Documentation
 
 * [Chromedriver Docs](https://sites.google.com/a/chromium.org/chromedriver/)
+* [WebDriver Capabilities](https://sites.google.com/a/chromium.org/chromedriver/capabilities)
 
 ---
 
