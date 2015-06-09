@@ -42,7 +42,7 @@ function Driver(options) {
 }
 
 Driver.defaults = defaults;
-Driver.prototype.behavior = behavior;
+Driver.prototype.behavior = behaviors;
 
 Driver.prototype.start = function(success, error, failure) {
   if (this.process) {
