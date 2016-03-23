@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "chromedriver": "^2.14.1",
-    "expand-home-dir": "0.0.2",
+    "expand-home-dir": "0.0.3",
     "portscanner": "^1.0.0"
   },
   "devDependencies": {
