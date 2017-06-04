@@ -1,3 +1,11 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+# DalekJS is not maintained any longer :cry:
+
+We recommend [TestCafé](http://devexpress.github.io/testcafe/) for your automated browser testing needs.
+
+---
+
 # dalek-driver-chrome - Browser/WebDriver process control
 
 Browser Driver for [Google Chrome](https://google.com/chrome/) using [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) providing an API to control the Browser/WebDriver process.
